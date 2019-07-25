@@ -99,6 +99,7 @@ def decompress_descriptions(encoding='utf-8'):
     """Convert parquet to tarfile"""
 
     pf = pq.ParquetFile(YAHOO_PARQUET)
+    print(pf.metadata)
 
     progress = tqdm(file=sys.stdout, disable=False)
 
@@ -118,7 +119,9 @@ def decompress_descriptions(encoding='utf-8'):
 
 
 def main():
-    scrape_descriptions_async()
+    # compress_descriptions()
+    decompress_descriptions()
+    # scrape_descriptions_async()
 
 
 if __name__ == '__main__':
