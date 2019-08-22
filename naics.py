@@ -74,10 +74,16 @@ def main():
         .addGrid(logistic_wordcount.elasticNetParam, [0.0, 0.1, 0.2, 0.3])
         .build()
         )
+    evaluator = MulticlassClassificationEvaluator(predictionCol='prediction', metricName='accuracy')
     cv = CrossValidator(
         estimator=logistic_wordcount,
+        estimatorParamMaps=grid,
+        numFolds=5,
+        evaluator=evaluator,
+        seed=100500,
         )
-
+    model_cv = cv.fit(prepared)
+    breakpoint()
 
 
 if __name__ == '__main__':
