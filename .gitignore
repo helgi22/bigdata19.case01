@@ -3,3 +3,6 @@ __pycache__
 /build
 /secret/*
 !/secret/.gitkeep
+/venv
+/metastore_db/*
+*.log
