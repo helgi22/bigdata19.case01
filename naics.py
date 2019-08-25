@@ -9,8 +9,6 @@ from pyspark.sql import SQLContext
 
 from config import BUILDDIR, DATADIR
 
-FINAL_MODEL = BUILDDIR / 'model_cv'
-
 
 spark = SQLContext(SparkContext.getOrCreate())
 
@@ -53,7 +51,7 @@ def main():
     prepared = model_wordcount.transform(data)
 
     # split to training and testing
-    training, testing = prepared.randomSplit([0.8, 0.2], seed=100500)
+    training, testing = prepared.randomSplit([0.7, 0.3], seed=100500)
 
     # fit logistic regression models
 
@@ -84,12 +82,9 @@ def main():
         evaluator=evaluator,
         seed=100500,
         )
-    if not FINAL_MODEL.exists():
-        model_cv = cv.fit(prepared)
-        model_cv.save(str(FINAL_MODEL))
-    else:
-        model_cv = CrossValidatorModel.load(str(FINAL_MODEL))
+    model_cv = cv.fit(prepared) # model_cv = CrossValidatorModel.load('build/model_cv')
     breakpoint()
+    model_cv.save('build/model_cv')
 
 
 if __name__ == '__main__':
